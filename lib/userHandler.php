@@ -16,7 +16,7 @@ class userHandler {
 		$currentUser = $this->db->model('user')->select('*')->
 			where('username',$username)->
 			where('password',$password)->
-			execute()->result;
+			execute()->result[0];
 		
 		if($currentUser > 0) {
 			setcookie("username", $username, time()+3600); 
@@ -25,7 +25,7 @@ class userHandler {
 			$this->currentUser = $currentUser;
 		} else {
 			$this->loggedIn = false;
-			$this->currentUSer = null;
+			$this->currentUser = null;
 		}
 		return $this;
 	}

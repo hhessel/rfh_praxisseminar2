@@ -30,7 +30,6 @@ class Templater {
 		return $this;
 	}
 	
-	
 	public function show() {
 		$this->removeEmptyTags();
 		return $this->_content;

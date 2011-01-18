@@ -1,6 +1,9 @@
 <?php
 
 class loader {
+	public $templater;
+	public $db;
+	public $userHandler;
 
 	public function load($module) {
 		if($module == 'templater') {
@@ -15,6 +18,14 @@ class loader {
 		}
 	}
 	
+	public static function loadBasicSetupForTpl($tblName) {
+		include('config.php');
+		$loader = new self();
+		$loader->templater = $loader->load('templater')->loadBaseTemplate('tpl', 'base.html');
+		$loader->db = $loader->load('db')->open($mysql_host, $mysql_user, $mysql_pw)->selectDB($mysql_db);
+		$loader->userHandler = $loader->load('userHandler')->setDB($loader->db);
+		return $loader;
+	}
 }
 
 ?>

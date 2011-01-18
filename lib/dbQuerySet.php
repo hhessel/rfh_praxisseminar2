@@ -7,6 +7,7 @@ class dbQuerySet {
 	public $whereValues;
 	public $fullQuery;
 	public $result;
+	public $res;
 	public $db;
 
 	public function __construct() {
@@ -36,13 +37,18 @@ class dbQuerySet {
 	
 	public function execute() {
 		$this->prepareQuery();
-		$result = mysql_query($this->fullQuery, $this->db->_connection) or die(mysql_error());
+		$this->res = mysql_query($this->fullQuery, $this->db->_connection) or die(mysql_error());
 		switch($this->cmd) {
 			case 'select':
-				$this->result = mysql_fetch_array($result);
+				$i = 0;
+				$this->result = array();
+				while ($row = mysql_fetch_array($this->res, MYSQL_ASSOC)) {
+					$this->result[$i] = $row;
+					$i++;
+				}
 				break;
 			case 'count':
-				$row = mysql_fetch_array($result);
+				$row = mysql_fetch_array($this->res);
 				$this->result = $row[0];
 				break;
 		}

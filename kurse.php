@@ -1,14 +1,11 @@
 <?php
-
-include('config.php');
 include('lib/loader.php');
 
-$loader = new Loader();
+$loader = Loader::loadBasicSetupForTpl('kurse.html');
 
-$templater = $loader->load('templater')->loadBaseTemplate('tpl', 'base.html');
-$db = $loader->load('db')->open($mysql_host, $mysql_user, $mysql_pw)->selectDB($mysql_db);
-
-$userHandler = $loader->load('userHandler')->setDB($db);
+$db = $loader->db;
+$templater = $loader->templater;
+$userHandler = $loader->userHandler;
 
 if($userHandler->isLoggedIn()) {
 	$templater->loadTemplate('kurse.html');
@@ -17,6 +14,18 @@ if($userHandler->isLoggedIn()) {
 	$data = array ('error' => 'Du bist nicht eingeloggt<br\>', 'redirect' => 'kurse');
 	$templater->loadTemplate('login.html')->data($data);
 }
+
+$kurse = $db->model('kurse')->select('*')->execute()->result;
+
+if(count($kurse) == 0) {
+	$kurs_uebersicht = "Keine Kurse vorhanden";
+} else {
+	while (list(, $kurs) = each($kurse)) {
+		$kurs_uebersicht .= $kurs['kursname'];
+	}
+}
+
+$templater->data(array("kurs_uebersicht" => $kurs_uebersicht));
 
 echo $templater->show();
 

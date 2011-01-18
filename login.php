@@ -1,14 +1,11 @@
 <?php
-
-include('config.php');
 include('lib/loader.php');
 
-$loader = new Loader();
+$loader = Loader::loadBasicSetupForTpl('login.html');
 
-$templater = $loader->load('templater')->loadBaseTemplate('tpl', 'base.html');
-$db = $loader->load('db')->open($mysql_host, $mysql_user, $mysql_pw)->selectDB($mysql_db);
-
-$userHandler = $loader->load('userHandler')->setDB($db);
+$db = $loader->db;
+$templater = $loader->templater;
+$userHandler = $loader->userHandler;
 
 if(isset($_POST['username']) && isset($_POST['username'])) {
 	if($userHandler->login($_POST['username'], $_POST['password'])->isLoggedIn()) {

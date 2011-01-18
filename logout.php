@@ -1,14 +1,13 @@
 <?php
 
-include('config.php');
 include('lib/loader.php');
 
-$loader = new Loader();
+$loader = Loader::loadBasicSetupForTpl('kurse.html');
 
-$templater = $loader->load('templater')->loadBaseTemplate('tpl', 'base.html');
-$db = $loader->load('db')->open($mysql_host, $mysql_user, $mysql_pw)->selectDB($mysql_db);
+$db = $loader->db;
+$templater = $loader->templater;
+$userHandler = $loader->userHandler;
 
-$userHandler = $loader->load('userHandler')->setDB($db);
 
 $userHandler->logout();
 
