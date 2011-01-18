@@ -29,11 +29,21 @@ class dbQuerySet {
 		return $this;
 	}
 	
+	public function count() {
+		$this->cmd = 'count';
+		return $this;
+	}
+	
 	public function execute() {
 		$this->prepareQuery();
 		$result = mysql_query($this->fullQuery, $this->db->_connection) or die(mysql_error());
-		if(strtolower($this->cmd) == 'select') {
-			$this->result = mysql_fetch_array($result);
+		switch($this->cmd) {
+			case 'select':
+				$this->result = mysql_fetch_array($result);
+			case 'count':
+				$row = mysql_fetch_array($result);
+				$this->result = $row[0];
+			break;
 		}
 		return $this;
 	}
@@ -44,29 +54,33 @@ class dbQuerySet {
 		$table = $this->tblName;
 		$where = $this->whereValues;		
 		
-		$query = $cmd . ' ';
 		switch($cmd) {
-			case "select":
+			case 'select':
+				$query = $cmd . ' ';
 				if(is_array($values)) {
 					$query .= implode(',' , $values);
 				} else {
 					$query .= $values;
 				}
 				$query .= ' from ' . $table . ' ';
-
-				if($where) {
-					$query .= ' where';
-					$where = $this->ms_escape_string($where);
-					while (list($key, $value) = each($where)) {
-						$query .= ' ' . $key . ' = ' . $value;
-					}
-
-				}				
-				$query .= ';';
+				break;
+			case 'count':
+				$query = 'SELECT COUNT(*) as count from ' . $table . ' ';
 				break;
 		}
+						
+		if($where) {
+			$query .= ' where';
+			$where = $this->ms_escape_string($where);
+			while (list($key, $value) = each($where)) {
+					$query .= sprintf(" %s = '%s' AND", $key, $value);
+				}		
+				$query = substr($query,0,-3);
+		}
 		
-		echo $query;
+		$query .= ';';
+		
+		// echo $query;
 		$this->fullQuery = $query;
 		return $this;
 	}

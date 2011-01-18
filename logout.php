@@ -10,14 +10,9 @@ $db = $loader->load('db')->open($mysql_host, $mysql_user, $mysql_pw)->selectDB($
 
 $userHandler = $loader->load('userHandler')->setDB($db);
 
-;
+$userHandler->logout();
 
-if($userHandler->isLoggedIn()) {
-	$templater->loadTemplate('kurse.html');
-} else {
-	$data = array ('error' => 'Du bist nicht eingeloggt', 'redirect' => 'kurse');
-	$templater->loadTemplate('login.html')->data($data);
-}
+$templater->loadTemplate('index.html');
 
 echo $templater->show();
 

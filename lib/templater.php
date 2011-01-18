@@ -18,7 +18,7 @@ class Templater {
 		return $this;
 	}
 	
-	public function insertDataIntoTemplate($valuearray) {
+	public function data($valuearray) {
 		if(is_array($valuearray)) {
 			foreach($valuearray as $key => $value) {
 				$searchpattern = "/%%(".strtoupper($key).")%%/si";

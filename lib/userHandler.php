@@ -1,20 +1,37 @@
 <?php
 
+
 class userHandler {
-	private $_db;
+	private $db;
+	private $loggedIn = false;
+	private $salt = "X134cS45!§3";
 	
 	public function setDB($db) {
 		$this->db = $db;
+		return $this;
 	}
+
 	
 	public function login($username, $password) {
-		$query = new dbQuerySet('SELECT', 'User', array('username' , 'password'));
-		$query->where = array('username='+$username, 'password='+$password);
-		$execute = $this->db->execute($this->db->prepareQuery($query));
+		$potentials = $this->db->model('user')->count()->
+			where('username',$username)->
+			where('password',$password)->
+			execute()->result;
+		
+		if($potentials > 0) {
+			setcookie("username", $username, time()+3600); 
+			setcookie("password", $password, time()+3600); 
+			$this->loggedIn = true;
+		} else {
+			$this->loggedIn = false;
+		}
+		return $this;
 	}
 	
 	public function logout() {
-
+		setcookie("username");
+		setcookie("password");
+		$this->loggedIn = false;
 	}
 	
 	public function register($username, $password) {
@@ -22,7 +39,14 @@ class userHandler {
 	}
 	
 	public function isLoggedIn() {
+		if(isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
+			$this->login($_COOKIE['username'], $_COOKIE['password']);
+		}
+		return $this->loggedIn;
+	}
 	
+	private function md5($value) {
+		return md5($value . $this->salt);
 	}
 }
 
