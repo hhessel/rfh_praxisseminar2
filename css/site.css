@@ -1,0 +1,105 @@
+html, body { padding:0; margin:0; repeat 0 0;  background:url(../images/main_bg.gif) repeat; font-family: "lucida grande",tahoma,verdana,arial,sans-serif; font-size:12px;}
+
+a:link { color: #08C; text-decoration: none; }
+.wrapper { position:relative; width:930px; margin:0 auto; }
+
+#top { 
+	height:38px; background-color:#fff; 
+	font: 18px Helvetica, Arial, Verdana, Sans-Serif;
+    line-height: 18px;
+    color: #625e51;
+    color: #6E6B5F;
+}
+#header { height:30px; repeat; background-color:#fff; }
+#menu  { height:30px; repeat; background-color:#fff; } 
+#content { background:url(../images/shadow-top.png) repeat-x; padding:15px 0 10px; min-height:500px; }
+
+#left-content { width:930px; float:left; color:#4F4041; padding-top:15px; }
+
+#submit_btn {
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	background:#39d url('/images/bg-btn-blue.png') repeat-x scroll 0 0;
+	border:1px solid #39D;
+	color:#fff;
+	text-shadow:0 -1px 0 #39d;
+	padding:4px 10px 5px;
+	font-size:11px;
+	margin:0 5px 0 0;
+	font-weight:bold;
+}
+
+#submit_btn::-moz-focus-inner {
+padding:0;
+border:0;
+}
+
+#signin_submit:hover, #signin_submit:focus {
+	background-position:0 -5px;
+	cursor:pointer;
+}
+
+#input_wrapper {
+	margin-top:5px;
+	margin-bottom:5px;
+	display:block;
+}
+
+#label {
+	width: 160px;
+}
+
+.header-menu {
+    font: 16px "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Verdana,sans-serif;
+    text-transform: uppercase;
+
+    margin: 0;
+    margin-top: 0px;
+	margin-left: 400px;
+    font-size: 14px;
+    font-weight: bold;
+    list-style-type: none;
+
+    float:left;
+    display: block;
+    line-height:1;
+    padding: 0px;
+}
+
+.header-menu li, .header-menu li a {
+    float:left;
+    display: block;
+}
+
+.header-menu li { 
+    margin-left: 10px;
+}
+.header-menu li:first-child {
+    margin-left: 0px;
+}
+
+.header-menu a {
+    -moz-transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+
+    text-decoration: none;
+    padding-left: 16px;
+    padding-right: 16px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+    color:#333;
+    text-shadow:0 1px 0 rgba(255, 255, 255, 0.5);
+    line-height: 30px;
+}
+
+.header-menu li.enabled a:hover {
+    text-decoration: none;
+    background-color: #ccc;
+    color: #000;
+}
