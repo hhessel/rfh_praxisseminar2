@@ -11,7 +11,7 @@ a:link { color: #08C; text-decoration: none; }
     color: #6E6B5F;
 }
 #header { height:30px; repeat; background-color:#fff; }
-#menu  { height:30px; repeat; background-color:#fff; } 
+#menu  { height:30px; repeat; background-color:#fff;} 
 #content { background:url(../images/shadow-top.png) repeat-x; padding:15px 0 10px; min-height:500px; }
 
 #left-content { width:930px; float:left; color:#4F4041; padding-top:15px; }

@@ -40,16 +40,17 @@ class dbQuerySet {
 		switch($this->cmd) {
 			case 'select':
 				$this->result = mysql_fetch_array($result);
+				break;
 			case 'count':
 				$row = mysql_fetch_array($result);
 				$this->result = $row[0];
-			break;
+				break;
 		}
 		return $this;
 	}
 	
 	private function prepareQuery() {
-		$cmd = strtolower($this->cmd);
+		$cmd = $this->cmd;
 		$values = $this->ms_escape_string($this->fieldValues);
 		$table = $this->tblName;
 		$where = $this->whereValues;		
@@ -80,7 +81,6 @@ class dbQuerySet {
 		
 		$query .= ';';
 		
-		// echo $query;
 		$this->fullQuery = $query;
 		return $this;
 	}

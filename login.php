@@ -10,17 +10,19 @@ $db = $loader->load('db')->open($mysql_host, $mysql_user, $mysql_pw)->selectDB($
 
 $userHandler = $loader->load('userHandler')->setDB($db);
 
-
 if(isset($_POST['username']) && isset($_POST['username'])) {
 	if($userHandler->login($_POST['username'], $_POST['password'])->isLoggedIn()) {
 		switch($_POST['redirect']) {
 			case 'kurse':	
-				$templater->loadTemplate('kurse.html');
+				header("Location: kurse.php");
+				break;
 			default:
-				$templater->loadTemplate('index.html');
+				header("Location: index.php");
+				break;
 		}
+		$templater->loadTemplate('index.html');
 	} else {
-		$data = array ('error' => 'Du bist nicht eingeloggt', 'redirect' => 'kurse');
+		$data = array ('error' => 'Benutername / Passwort nicht gefunden', 'redirect' => 'kurse');
 		$templater->loadTemplate('login.html')->data($data);
 	}
 }

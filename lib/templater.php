@@ -25,15 +25,25 @@ class Templater {
 
 				// Gefundene Platzhalter mit Werten aus $wertearray ersetzen
 				$this->_content = preg_replace($searchpattern, $value, $this->_content);
-			}
-			// Nicht ersetzte Platzhalter aus Template entfernen
-			$this->_content = preg_replace("/((%%)(.+?)(%%))/si", '', $this->_content);
+			}		
 		}
 		return $this;
 	}
 	
+	
 	public function show() {
+		$this->removeEmptyTags();
 		return $this->_content;
+	} 
+	
+	public function showWelcome($currentUser) {
+		$welcome = 'Hallo ' . $currentUser['firstname'] . ' ' . $currentUser['lastname'] . ' <a href="logout.php">Logout</a>';
+		$data = array('welcome_message' => $welcome);
+		$this->data($data);
+	}
+	
+	private function removeEmptyTags() {
+		$this->_content = preg_replace('~\%%\s*(.+?)\s*\%%~', '', $this->_content);
 	}
 }
 
