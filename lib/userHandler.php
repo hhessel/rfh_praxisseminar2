@@ -50,7 +50,7 @@ class userHandler {
 		
 		$exists = $this->db->model('user')->select('*')->
 			where('username',$username)->
-			execute()->result;
+			execute()->result[0];
 			
 		if(count($exists) > 0) {
 			return $this;
@@ -59,12 +59,12 @@ class userHandler {
 		$this->db->model('user')->insert(
 			array(
 				'username' => $username, 
-				'password' => $this->md5Hash($password),
+				'password' => $password,
 				'firstname' => $firstname,
 				'lastname' => $lastname
 			))->execute();
 			
-		$this->login($username, $password);
+		$this->login($username, $password, false);
 			
 		return $this;
 	}

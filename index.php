@@ -8,7 +8,7 @@ $userHandler = $loader->userHandler;
 
 $templater->loadTemplate('index.html');
 
-if($userHandler->isLoggedIn()) {
+if($userHandler->login()->isLoggedIn()) {
 	$templater->showWelcome($userHandler->getCurrentUser());
 }
 
