@@ -16,9 +16,9 @@ class dbQuerySet {
 	}
 	
 	public static function selectTable($modelName) {
-        $instance = new self();
-        $instance->tblName = $modelName;
-        return $instance;
+		$instance = new self();
+		$instance->tblName = $modelName;
+		return $instance;
 	}
 
 	public function select($values) {
