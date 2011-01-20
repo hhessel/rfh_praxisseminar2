@@ -48,11 +48,13 @@ class userHandler {
 	public function register($username, $password, $firstname, $lastname) {
 		$password = $this->md5Hash($password);
 		
-		$exists = $this->db->model('user')->select('*')->
-			where('username',$username)->
-			execute()->result[0];
+		$count = $this->db
+			->model('user')
+			->count()
+			->where('username',$username)
+			->execute();
 			
-		if(count($exists) > 0) {
+		if($count->result > 0) {
 			return $this;
 		}
 		

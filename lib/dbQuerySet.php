@@ -113,7 +113,7 @@ class dbQuerySet {
 				break;
 				
 			case 'update':
-				$query = $cmd . ' ' . $table . ' SET';
+				$query = $cmd . ' ' . $table . ' SET ';
 				while (list($field, $value) = each($this->updateValues )) {
 					$query .= $field . '=' . sprintf("'%s'", $value) . ',';
 				}
