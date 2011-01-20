@@ -19,7 +19,7 @@ class dbQuerySet {
         $instance = new self();
         $instance->tblName = $modelName;
         return $instance;
-    }
+	}
 
 	public function select($values) {
 		$this->cmd = 'select';
