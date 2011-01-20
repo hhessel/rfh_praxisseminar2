@@ -45,7 +45,7 @@ class userHandler {
 		$this->loggedIn = false;
 	}
 	
-	public function register($username, $password) {
+	public function register($username, $password, $firstname, $lastname) {
 		$password = $this->md5Hash($password);
 		
 		$exists = $this->db->model('user')->select('*')->
@@ -59,7 +59,9 @@ class userHandler {
 		$this->db->model('user')->insert(
 			array(
 				'username' => $username, 
-				'password' => $this->md5Hash($password)
+				'password' => $this->md5Hash($password),
+				'firstname' => $firstname,
+				'lastname' => $lastname
 			))->execute();
 			
 		$this->login($username, $password);

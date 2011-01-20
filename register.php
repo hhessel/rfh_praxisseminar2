@@ -14,9 +14,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['confi
 		$data = array ('error' => 'Passwörter stimmen nicht überein', 'redirect' => 'kurse');
 		$templater->loadTemplate('register.html')->data($data);
 	} else {
-		$username = $_POST['username'];
-		$password = $_POST['password'];
-		if($userHandler->register($username,$password)->isLoggedIn()) {
+		if($userHandler->register($_POST['username'],$_POST['password'], $_POST['firstname'], $_POST['lastname'])->isLoggedIn()) {
 			header("Location: kurse.php");
 			break;
 		} else {
