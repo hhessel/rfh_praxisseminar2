@@ -1,11 +1,12 @@
 <?php
 include('lib/loader.php');
 
-$loader = Loader::loadBasicSetupForTpl('index.html');
+$loader = Loader::loadBasicSetup();
 
-$db = $loader->db;
 $templater = $loader->templater;
 $userHandler = $loader->userHandler;
+
+$templater->loadTemplate('index.html');
 
 if($userHandler->isLoggedIn()) {
 	$templater->showWelcome($userHandler->getCurrentUser());

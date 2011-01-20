@@ -12,13 +12,22 @@ class userHandler {
 		return $this;
 	}
 
-	public function login($username, $password) {
+	public function login($username = "", $password = "", $saltedPassword = true) {
+		if($username && $saltedPassword) {
+			$password = $this->md5Hash($password);
+		} else if(!$username) {
+			if(isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
+				$username = $_COOKIE['username'];
+				$password = $_COOKIE['password'];
+			}
+		}
+		
 		$currentUser = $this->db->model('user')->select('*')->
 			where('username',$username)->
 			where('password',$password)->
 			execute()->result[0];
-		
-		if($currentUser > 0) {
+
+		if(count($currentUser) > 0) {
 			setcookie("username", $username, time()+3600); 
 			setcookie("password", $password, time()+3600); 
 			$this->loggedIn = true;
@@ -31,21 +40,34 @@ class userHandler {
 	}
 	
 	public function logout() {
-		setcookie("username");
-		setcookie("password");
+		setcookie('username','',time()-3600);
+		setcookie('password','',time()-3600);
 		$this->loggedIn = false;
 	}
 	
 	public function register($username, $password) {
-	
+		$password = $this->md5Hash($password);
+		
+		$exists = $this->db->model('user')->select('*')->
+			where('username',$username)->
+			execute()->result;
+			
+		if(count($exists) > 0) {
+			return $this;
+		}
+		
+		$this->db->model('user')->insert(
+			array(
+				'username' => $username, 
+				'password' => $this->md5Hash($password)
+			))->execute();
+			
+		$this->login($username, $password);
+			
+		return $this;
 	}
 	
 	public function isLoggedIn() {
-		if(!$this->loggedIn) {
-			if(isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
-				$this->login($_COOKIE['username'], $_COOKIE['password']);
-			}
-		}
 		return $this->loggedIn;
 	}
 	
@@ -54,7 +76,7 @@ class userHandler {
 	}
 	
 	
-	private function md5($value) {
+	private function md5Hash($value) {
 		return md5($value . $this->salt);
 	}
 	

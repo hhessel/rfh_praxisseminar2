@@ -1,9 +1,8 @@
 <?php
 include('lib/loader.php');
 
-$loader = Loader::loadBasicSetupForTpl('login.html');
+$loader = Loader::loadBasicSetup();
 
-$db = $loader->db;
 $templater = $loader->templater;
 $userHandler = $loader->userHandler;
 

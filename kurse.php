@@ -1,13 +1,13 @@
 <?php
 include('lib/loader.php');
 
-$loader = Loader::loadBasicSetupForTpl('kurse.html');
+$loader = Loader::loadBasicSetup();
 
 $db = $loader->db;
 $templater = $loader->templater;
 $userHandler = $loader->userHandler;
 
-if($userHandler->isLoggedIn()) {
+if($userHandler->login()->isLoggedIn()) {
 	$templater->loadTemplate('kurse.html');
 	$templater->showWelcome($userHandler->getCurrentUser());
 } else {

@@ -5,6 +5,7 @@ class dbQuerySet {
 	public $tblName;
 	public $fieldValues;
 	public $whereValues;
+	public $insertValues;
 	public $fullQuery;
 	public $result;
 	public $res;
@@ -25,6 +26,12 @@ class dbQuerySet {
 		return $this;
 	}
 	
+	public function insert($values) {
+		$this->cmd = 'insert into';
+		$this->insertValues = $values;
+		return $this;
+	}
+	
 	public function where($field, $value) {
 		$this->whereValues[$field] = $value;
 		return $this;
@@ -37,11 +44,12 @@ class dbQuerySet {
 	
 	public function execute() {
 		$this->prepareQuery();
+		$this->result = array();
 		$this->res = mysql_query($this->fullQuery, $this->db->_connection) or die(mysql_error());
+		
 		switch($this->cmd) {
 			case 'select':
 				$i = 0;
-				$this->result = array();
 				while ($row = mysql_fetch_array($this->res, MYSQL_ASSOC)) {
 					$this->result[$i] = $row;
 					$i++;
@@ -52,6 +60,7 @@ class dbQuerySet {
 				$this->result = $row[0];
 				break;
 		}
+	
 		return $this;
 	}
 	
@@ -74,6 +83,18 @@ class dbQuerySet {
 			case 'count':
 				$query = 'SELECT COUNT(*) as count from ' . $table . ' ';
 				break;
+			case 'insert into':
+				$query = $cmd . ' ' . $table . ' ';
+				$fields = '(';
+				$values = '(';
+				while (list($field, $value) = each($this->insertValues )) {
+					$fields .= $field . ',';
+					$values .= sprintf("'%s'", $value) . ',';
+				}
+				$fields = substr($fields,0,-1) . ')';
+				$values = substr($values,0,-1) . ')';
+				$query .= $fields . ' VALUES ' . $values; 
+				break;
 		}
 						
 		if($where) {
@@ -86,7 +107,7 @@ class dbQuerySet {
 		}
 		
 		$query .= ';';
-		
+		// echo $query;
 		$this->fullQuery = $query;
 		return $this;
 	}

@@ -18,7 +18,7 @@ class loader {
 		}
 	}
 	
-	public static function loadBasicSetupForTpl($tblName) {
+	public static function loadBasicSetup() {
 		include('config.php');
 		$loader = new self();
 		$loader->templater = $loader->load('templater')->loadBaseTemplate('tpl', 'base.html');
