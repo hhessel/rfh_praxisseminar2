@@ -6,6 +6,7 @@ class dbQuerySet {
 	public $fieldValues;
 	public $whereValues;
 	public $insertValues;
+	public $updateValues;
 	public $fullQuery;
 	public $result;
 	public $res;
@@ -30,6 +31,17 @@ class dbQuerySet {
 	public function insert($values) {
 		$this->cmd = 'insert into';
 		$this->insertValues = $values;
+		return $this;
+	}
+	
+	public function update($values) {
+		$this->cmd = 'update';
+		$this->updateValues = $values;
+		return $this;
+	}
+	
+	public function delete() {
+		$this->cmd = 'delete from';
 		return $this;
 	}
 	
@@ -72,6 +84,7 @@ class dbQuerySet {
 		$where = $this->whereValues;		
 		
 		switch($cmd) {
+		
 			case 'select':
 				$query = $cmd . ' ';
 				if(is_array($values)) {
@@ -81,9 +94,11 @@ class dbQuerySet {
 				}
 				$query .= ' from ' . $table . ' ';
 				break;
+				
 			case 'count':
 				$query = 'SELECT COUNT(*) as count from ' . $table . ' ';
 				break;
+				
 			case 'insert into':
 				$query = $cmd . ' ' . $table . ' ';
 				$fields = '(';
@@ -95,6 +110,18 @@ class dbQuerySet {
 				$fields = substr($fields,0,-1) . ')';
 				$values = substr($values,0,-1) . ')';
 				$query .= $fields . ' VALUES ' . $values; 
+				break;
+				
+			case 'update':
+				$query = $cmd . ' ' . $table . ' SET';
+				while (list($field, $value) = each($this->updateValues )) {
+					$query .= $field . '=' . sprintf("'%s'", $value) . ',';
+				}
+				$query = substr($query,0,-1);
+				break;
+				
+			case 'delete from':
+				$query = $cmd . ' ' . $table;
 				break;
 		}
 						
