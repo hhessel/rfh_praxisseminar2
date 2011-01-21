@@ -5,6 +5,8 @@ class dbQuerySet {
 	public $tblName;
 	public $fieldValues;
 	public $whereValues;
+	public $orderBy; 
+	public $ascDesc; 
 	public $insertValues;
 	public $updateValues;
 	public $fullQuery;
@@ -47,6 +49,12 @@ class dbQuerySet {
 	
 	public function where($field, $value) {
 		$this->whereValues[$field] = $value;
+		return $this;
+	}
+	
+	public function orderby($field, $order = 'ASC') {
+		$this->orderBy = $field;
+		$this->ascDesc = $order;
 		return $this;
 	}
 	
@@ -133,6 +141,10 @@ class dbQuerySet {
 				}		
 				$query = substr($query,0,-3);
 		}
+		
+		if($this->orderBy) {
+			$query .= ' ORDER BY ' . $this->orderBy  . ' ' . $this->ascDesc;
+		}	
 		
 		$query .= ';';
 		// echo $query;

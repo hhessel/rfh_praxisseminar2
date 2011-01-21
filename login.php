@@ -11,9 +11,11 @@ if(isset($_POST['username']) && isset($_POST['username'])) {
 		switch($_POST['redirect']) {
 			case 'kurse':	
 				header("Location: kurse.php");
+				exit();
 				break;
 			default:
 				header("Location: index.php");
+				exit();
 				break;
 		}
 		$templater->loadTemplate('index.html');

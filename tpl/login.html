@@ -1,8 +1,15 @@
-%%error%%
  <form name="login" method="post" action="login.php">
-	<input type='text' name='username' /><br\>
-	<input type='password' name='password' /><br\>
-	<input type='hidden' name='redirect' value='%%redirect%%'>
-	<input type="submit" name="submit" value="Anmelden"><br\>
-	<a href='register.php'>Noch nicht registiert?</a> 
+	<table style="width:200px;">
+	<tr><td colspan='2' style='text-align:right;'>%%error%%</td></tr>
+	<tr><td style='text-align:right;'>Username</td><td><input type='text' name='username' /></td><tr>
+	<tr><td style='text-align:right;'>Password</td><td><input type='password' name='password' /></td><tr>
+	
+	<tr>
+			<td colspan="2" style='text-align:right;'>
+				<input type='hidden' name='redirect' value='%%redirect%%'>
+				<input type="submit" name="submit" id="submit_btn" value="Einloggen"><br\>
+			</td>
+	<tr>
+	<tr><td colspan="2"  style='text-align:right;'><a href='register.php'>Noch nicht registiert?</a></td><tr>
+	</table>
 </form>
