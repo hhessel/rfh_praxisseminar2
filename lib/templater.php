@@ -2,6 +2,7 @@
 
 class Templater {
 	private $_content;
+	private $_templateContent; 
 	private $_baseDir;
 	
 	public function loadBaseTemplate($templateBaseDir, $templateFileName) {
@@ -11,12 +12,15 @@ class Templater {
 	}
 	
 	public function loadTemplate($templateFileName) {
-		$templateContent = file_get_contents($this->_baseDir . '/' . $templateFileName);
-		
-		$searchpattern = "/%%(base_content)%%/si";
-		$this->_content = preg_replace($searchpattern, $templateContent, $this->_content);
+		$this->_templateContent = file_get_contents($this->_baseDir . '/' . $templateFileName);
 		return $this;
 	}
+	
+	public function attachTemplate($templateFileName) {
+		$this->_templateContent .= file_get_contents($this->_baseDir . '/' . $templateFileName);
+		return $this;
+	}
+	
 	
 	public function data($valuearray) {
 		if(is_array($valuearray)) {
@@ -25,12 +29,16 @@ class Templater {
 
 				// Gefundene Platzhalter mit Werten aus $wertearray ersetzen
 				$this->_content = preg_replace($searchpattern, $value, $this->_content);
+				$this->_templateContent = preg_replace($searchpattern, $value, $this->_templateContent);
 			}		
 		}
 		return $this;
 	}
 	
 	public function show() {
+		$searchpattern = "/%%(base_content)%%/si";
+		$this->_content = preg_replace($searchpattern, $this->_templateContent, $this->_content);
+		
 		$this->removeEmptyTags();
 		return $this->_content;
 	} 

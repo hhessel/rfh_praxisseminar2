@@ -135,9 +135,9 @@ class dbQuerySet {
 						
 		if($where) {
 			$query .= ' where';
-			$where = $this->ms_escape_string($where);
 			while (list($key, $value) = each($where)) {
-					$query .= sprintf(" %s = '%s' AND", $key, $value);
+					$value = $this->ms_escape_string($value);
+					(is_string($value)) ? $query .= sprintf(" %s = '%s' AND", $key, $value) : 	$query .= sprintf(" %s = %s AND", $key, $value);
 				}		
 				$query = substr($query,0,-3);
 		}

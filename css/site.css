@@ -1,4 +1,4 @@
-html, body { padding:0; margin:0; repeat 0 0;  background:url(../images/main_bg.gif) repeat; font-family: "lucida grande",tahoma,verdana,arial,sans-serif; font-size:13px;}
+html, body { padding:0; margin:0; repeat 0 0;  background:url(../images/main_bg.gif) repeat; font-family: "lucida grande",tahoma,verdana,arial,sans-serif; font-size:12px;}
 
 a:link { color: #08C; text-decoration: none; }
 .wrapper { position:relative; width:930px; margin:0 auto; }

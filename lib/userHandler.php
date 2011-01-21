@@ -85,7 +85,7 @@ class userHandler {
 	}
 	
 	public function isAdmin() {
-		return ($this->currentUser['admin'] == 1) ? true : false;
+		return ($this->currentUser['isAdmin']) ? true : false;
 	}
 	
 	private function createCookieSet($username, $password) {

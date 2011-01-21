@@ -9,7 +9,7 @@ $userHandler = $loader->userHandler;
 
 $userHandler->logout();
 
-$templater->loadTemplate('index.html');
+$templater->loadTemplate('login.html');
 
 echo $templater->show();
 
