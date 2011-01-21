@@ -28,7 +28,7 @@ if(count($kurse) == 0) {
 									<td style="text-align:right;">' .  $kurs['semester'] . '</td>
 									<td>' . $kurs['kursname'] . '</td>
 									<td style="vertical-align:middle;">' . $attachment_count . '
-										<a href="kurse.php?view='. $kurs['id'] . '"><img src="images/note.png" style="vertical-align:top;"></a>
+										<a href="kurse_view.php?view='. $kurs['id'] . '"><img src="images/note.png" style="vertical-align:top;"></a>
 										<img src="images/note_add.png" style="vertical-align:top;">
 									</td>';
 									
