@@ -1,10 +1,14 @@
 <?php
 
+// Simple Instance Generater Class
+// by Henrik P. Hessel
+
 class loader {
 	public $templater;
 	public $db;
 	public $userHandler;
 
+	// load Library Module and creates and Instance 
 	public function load($module) {
 		if($module == 'templater') {
 			include('templater.php');

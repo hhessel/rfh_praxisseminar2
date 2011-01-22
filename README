@@ -1,1 +1,8 @@
 Praxissemimar RFH 1 / Projektarbeit
+
+SQL Folder contains an empty SQL Structure.
+
+Important!:
+Add an admin user by setting the isAdmin Flag to 1 to add new courses.
+On UNIX Filesystem the upload Folder need to be set to chmod 777 upload (rwx*)
+

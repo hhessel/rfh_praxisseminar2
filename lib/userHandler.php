@@ -1,5 +1,7 @@
 <?php
 
+// Simple UserHandler Class
+// by Henrik P. Hessel
 
 class userHandler {
 	private $db;
@@ -13,6 +15,7 @@ class userHandler {
 		return $this;
 	}
 
+	// logs the user in 
 	public function login($username = "", $password = "", $saltedPassword = true) {
 	
 		if($username && $saltedPassword) {
@@ -44,12 +47,14 @@ class userHandler {
 		return $this;
 	}
 	
+	// logs the user out and removes the cookies
 	public function logout() {
 		setcookie('username','',time()-3600);
 		setcookie('password','',time()-3600);
 		$this->loggedIn = false;
 	}
 	
+	// register and login 
 	public function register($username, $password, $firstname, $lastname) {
 		$password = $this->md5Hash($password);
 		
@@ -76,18 +81,22 @@ class userHandler {
 		return $this;
 	}
 	
+	// return boolean if the user is logged in
 	public function isLoggedIn() {
 		return $this->loggedIn;
 	}
 		
+	// return currentUser
 	public function getCurrentUser() {
 		return $this->currentUser;		
 	}
 	
+	// returns boolean if the current user is an admin
 	public function isAdmin() {
 		return ($this->currentUser['isAdmin']) ? true : false;
 	}
 	
+	// create Cookies for currentUser
 	private function createCookieSet($username, $password) {
 		setcookie("username", $username, time()+3600); 
 		setcookie("password", $password, time()+3600); 
@@ -95,6 +104,7 @@ class userHandler {
 		return $this;
 	}
 	
+	// return boolean is cookies are set
 	private function isCookieSetValid() {
 		return (isset($this->cookieSet)) ? true : false;
 	}
@@ -104,6 +114,7 @@ class userHandler {
 		return $this;
 	}
 	
+	// return salted md5 hash
 	private function md5Hash($value) {
 		return md5($value . $this->salt);
 	}

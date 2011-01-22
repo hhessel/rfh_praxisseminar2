@@ -1,5 +1,8 @@
 <?php
 
+// Simple SQL Abstraction Class
+// by Henrik P. Hessel
+
 class dbQuerySet {
 	public $cmd;
 	public $tblName;
@@ -18,51 +21,60 @@ class dbQuerySet {
 	
 	}
 	
+	// Select Table for Query
 	public static function selectTable($modelName) {
 		$instance = new self();
 		$instance->tblName = $modelName;
 		return $instance;
 	}
 
+	// Set SELECT Command and corresponding values
 	public function select($values) {
 		$this->cmd = 'select';
 		$this->fieldValues = $values;
 		return $this;
 	}
 	
+	// Set INSERT INTO Command and corresponding values
 	public function insert($values) {
 		$this->cmd = 'insert into';
 		$this->insertValues = $values;
 		return $this;
 	}
 	
+	// Set WHERE Command and corresponding values
 	public function update($values) {
 		$this->cmd = 'update';
 		$this->updateValues = $values;
 		return $this;
 	}
 	
+	// Set DELETE Command and corresponding values
 	public function delete() {
 		$this->cmd = 'delete from';
 		return $this;
 	}
 	
+	// Filter Query by Where
 	public function where($field, $value) {
 		$this->whereValues[$field] = $value;
 		return $this;
 	}
 	
+	// OrderBy corresponding field
 	public function orderby($field, $order = 'ASC') {
 		$this->orderBy = $field;
 		$this->ascDesc = $order;
 		return $this;
 	}
 	
+	// Set Query to count values
 	public function count() {
 		$this->cmd = 'count';
 		return $this;
 	}
 	
+	// Builds the Query,executes it, and loads the result into an array
 	public function execute() {
 		$this->prepareQuery();
 		$this->result = array();
@@ -85,6 +97,7 @@ class dbQuerySet {
 		return $this;
 	}
 	
+	// Builds QueryString
 	private function prepareQuery() {
 		$cmd = $this->cmd;
 		$values = $this->ms_escape_string($this->fieldValues);
@@ -152,6 +165,7 @@ class dbQuerySet {
 		return $this;
 	}
 	
+	// removes invalid characters in query and values
 	private function ms_escape_string($data) {
 		if ( !isset($data) or empty($data) ) return '';
 		if ( is_numeric($data) ) return $data;
