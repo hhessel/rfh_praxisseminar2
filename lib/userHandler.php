@@ -79,6 +79,16 @@ class userHandler {
 		return $this;
 	}
 	
+	public function registerAdmin($username, $password, $firstname, $lastname) {
+		$this->register($username, $password, $firstname, $lastname);
+		$this->db->model('user')->update(
+			array('isAdmin' => 1))
+			->where('username', $username)
+			->execute();
+		
+		return $this;
+	}
+	
 	// return boolean if the user is logged in
 	public function isLoggedIn() {
 		return $this->loggedIn;
@@ -92,6 +102,10 @@ class userHandler {
 	// returns boolean if the current user is an admin
 	public function isAdmin() {
 		return ($this->currentUser['isAdmin']) ? true : false;
+	}
+	
+	public function needsSetup() {
+		return ($this->db->model('user')->count()->execute()->result[0] == 0);
 	}
 	
 	// create Cookies for currentUser

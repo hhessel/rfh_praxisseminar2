@@ -17,10 +17,6 @@ class dbQuerySet {
 	public $res;
 	public $db;
 
-	public function __construct() {
-	
-	}
-	
 	// Select Table for Query
 	public static function selectTable($modelName) {
 		$instance = new self();

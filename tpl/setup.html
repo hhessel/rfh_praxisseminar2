@@ -1,0 +1,27 @@
+<script src="scripts/jquery-1.4.4.min.js" type="text/javascript"></script>
+<script src="scripts/jquery.validate.min.js" type="text/javascript"></script>
+ 
+<form name="register" id="register" method="post" action="setup.php">
+	<h1>Initales Setup: Admin User anlegen</h1>
+	<table style="width:200px;">
+	<tr><td colspan='2' style='text-align:right;'>%%error%%</td></tr>
+	<tr><td style='text-align:right;'>Username</td><td><input type='text' name='username'  class="required" /></td><tr>
+	<tr><td style='text-align:right;'>Vorname</td><td><input type='text' name='firstname' class="required" /></td><tr>
+	<tr><td style='text-align:right;'>Nachname</td><td><input type='text' name='lastname' class="required" /></td><tr>
+	<tr><td style='text-align:right;'>Password</td><td><input type='password' name='password'  class="required" /></td><tr>
+	<tr><td style='text-align:right;'>Password bestätigen</td><td><input type='password' name='confirm_password'  class="required" /></td><tr>
+	
+	<tr>
+			<td colspan="2" style='text-align:right;'>
+				<input type="submit" name="submit" id="submit_btn" value="Admin Anlegen"><br\>
+			</td>
+	<tr>
+
+	</table>
+</form>
+
+<script>
+	$(document).ready(function(){ 
+		$("#register").validate ();
+	});
+</script>

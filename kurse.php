@@ -45,7 +45,7 @@ if(isset($_POST['kursname'])) {
 $kurse = $db->model('kurse')->select('*')->orderBy('semester')->execute()->result;
 
 if(count($kurse) == 0) {
-	$kurs_uebersicht = "Keine Kurse vorhanden";
+	$kurse_uebersicht = "Keine Kurse vorhanden";
 } else {
 		$kurse_uebersicht = '<table style="width:700px;"><tr><td style="width:30px;">Sem.</td><td style="width:300px;">Kursname</td><td style="width:100px;"></td><td width="*"></td></tr>';
 		
