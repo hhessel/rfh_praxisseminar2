@@ -11,6 +11,7 @@ class loader {
 	public $templater;
 	public $db;
 	public $userHandler;
+	public $courseHandler;
 
 	public static function loadBasicSetup() {
 		include('config.php');
@@ -23,8 +24,12 @@ class loader {
 		
 		$loader->userHandler = new userHandler();
 		$loader->userHandler = $loader->userHandler->setDB($loader->db);
+		
+		$loader->courseHandler = new CourseHandler($loader->db, $loader->userHandler);
+
 		return $loader;
 	}
+	
 }
 
 ?>

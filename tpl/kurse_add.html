@@ -1,5 +1,9 @@
 <script src="scripts/jquery-1.4.4.min.js" type="text/javascript"></script>
 <script src="scripts/jquery.validate.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	jQuery.noConflict();
+
+</script>
  
  <h2>Kurs hinzufügen</h2>
  <form name="add_kurs" id="add_kurs" method="post" action="kurse.php">
@@ -30,7 +34,7 @@
 
 
 <script>
-	$(document).ready(function(){ 
-		$("#add_kurs").validate ();
+	jQuery(document).ready(function(){ 
+		jQuery("#add_kurs").validate ();
 	});
 </script>
