@@ -21,24 +21,22 @@ class userHandler {
 		if($username && $saltedPassword) {
 			$password = $this->md5Hash($password);
 		} else if(!$username) {
-		
 			if($this->getCookieSet()->isCookieSetValid()) {
 				$username = $this->cookieSet['username'];
 				$password = $this->cookieSet['password'];
-			}
-			
+			}	
 		}
 		
-		$currentUser = $this->db
+		$queryUser = $this->db
 			->model('user')->select('*')
 			->where('username',$username)
 			->where('password',$password)->
-			execute()->result[0];
-
-		if(count($currentUser) > 0) {
+			execute();
+			
+		if(count($queryUser->result) > 0) {
 			$this->createCookieSet($username, $password);
 			$this->loggedIn = true;
-			$this->currentUser = $currentUser;
+			$this->currentUser = $queryUser->result[0];
 		} else {
 			$this->loggedIn = false;
 			$this->currentUser = null;
@@ -110,7 +108,7 @@ class userHandler {
 	}
 	
 	private function getCookieSet () {
-		$this->cookieSet = array('username' => $_COOKIE['username'], 'password' => $_COOKIE['password']);
+		$this->cookieSet = (array_key_exists('username', $_COOKIE)) ? array('username' => $_COOKIE['username'], 'password' => $_COOKIE['password']) : null;
 		return $this;
 	}
 	
