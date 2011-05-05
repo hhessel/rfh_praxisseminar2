@@ -16,16 +16,15 @@ function ajax(url, callback) {
 		 
 	xrequest.onreadystatechange=function() {
 	   if(xrequest.readyState==4) {
-				callback;
+				callback();
 			}
 	   }
    
 	xrequest.open("GET", url ,true);
 	xrequest.send(null);
-	
 }
 
 function deleteCourse(courseId) {
-	ajax('kurse.php?ajax=1&delete_course=' + courseId, function () { Effect.BlindDown('tr_' + courseId, { duration: 1.0 }); } );
+	ajax('kurse.php?ajax=1&delete_course=' + courseId, function () { Effect.DropOut('tr_' + courseId, { duration: 0.2 }); } );
 }
 
