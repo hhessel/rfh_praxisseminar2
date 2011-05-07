@@ -18,6 +18,22 @@ if($userHandler->login()->isLoggedIn()) {
 	$templater->loadTemplate('login.html')->data($data);
 }
 
+if(isset($_GET['export'])) {
+	$exporter = new Exporter($db);
+	if($_GET['export'] == "xml") {
+		header("Content-Type: text/xml");
+		header('Content-Disposition: filename="kurse.xml"');
+		echo $exporter->exportCoursesToXML();
+		exit();
+	} else {
+		header("Content-Type: text/javascript");
+		header('Content-Disposition: filename="kurse.txt"');
+		echo $exporter->exportCoursesToJSON();
+		exit();
+	}
+
+}
+
 if(isset($_GET['delete_course'])) {
 	$courseHandler->deleteCourse((int)$_GET['delete_course']);
 	if(!isset($_GET['ajax']))  {
@@ -60,7 +76,7 @@ if(count($kurse) == 0) {
 		}
 		
 		$kurse_uebersicht .= '</table>';
-
+		$kurse_uebersicht .= '<br/> Export to <a href="kurse.php?export=xml">XML</a> / <a href="kurse.php?export=json">JSON</a>';
 }	
 
 if($userHandler->isAdmin()) {

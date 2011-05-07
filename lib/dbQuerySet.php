@@ -25,7 +25,7 @@ class dbQuerySet {
 	}
 
 	// Set SELECT Command and corresponding values
-	public function select($values) {
+	public function select($values = '*') {
 		$this->cmd = 'select';
 		$this->fieldValues = $values;
 		return $this;

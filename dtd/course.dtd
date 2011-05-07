@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT kurse (kurs+)>
+<!ELEMENT kurs (kursId, kursname, semester)>
+<!ELEMENT kursId (#PCDATA)>
+<!ELEMENT kursname (#PCDATA)>
+<!ELEMENT semester (#PCDATA)>
