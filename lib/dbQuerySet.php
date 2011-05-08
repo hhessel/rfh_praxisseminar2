@@ -12,6 +12,8 @@ class dbQuerySet {
 	public $ascDesc; 
 	public $insertValues;
 	public $updateValues;
+	public $limitStart;
+	public $limitEnd;
 	public $fullQuery;
 	public $result;
 	public $res;
@@ -62,6 +64,12 @@ class dbQuerySet {
 		$this->orderBy = $field;
 		$this->ascDesc = $order;
 		return $this;
+	}
+	
+	// Limit Queryset
+	public function limit($start, $end = "") {
+		$this->limitStart = $start;
+		$this->limitEnd = $end;
 	}
 	
 	// Set Query to count values
@@ -146,7 +154,7 @@ class dbQuerySet {
 			$query .= ' where';
 			while (list($key, $value) = each($where)) {
 					$value = $this->ms_escape_string($value);
-					(is_string($value)) ? $query .= sprintf(" %s = '%s' AND", $key, $value) : 	$query .= sprintf(" %s = %s AND", $key, $value);
+					(is_string($value)) ? $query .= sprintf(" %s = '%s' AND", $key, $value) : $query .= sprintf(" %s = %s AND", $key, $value);
 				}		
 				$query = substr($query,0,-3);
 		}
@@ -155,8 +163,12 @@ class dbQuerySet {
 			$query .= ' ORDER BY ' . $this->orderBy  . ' ' . $this->ascDesc;
 		}	
 		
+		if($this->limitStart) {
+			$query .= ' LIMIT ' . $this->limitStart;
+			if(length($this->limitEnd) > 0) { $query .= ',' . $this->limitEnd;
+		}
+		
 		$query .= ';';
-		// echo $query;
 		$this->fullQuery = $query;
 		return $this;
 	}
