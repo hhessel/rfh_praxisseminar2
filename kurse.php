@@ -51,6 +51,9 @@ if(isset($_POST['kursname'])) {
 	exit();
 }
 
+$latest = $db->model('attachment')->select()->limit(3)->execute()->result();
+
+
 
 $kurse = $courseHandler->getAllCourses();
 

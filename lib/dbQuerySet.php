@@ -70,6 +70,7 @@ class dbQuerySet {
 	public function limit($start, $end = "") {
 		$this->limitStart = $start;
 		$this->limitEnd = $end;
+		return $this;
 	}
 	
 	// Set Query to count values
@@ -165,7 +166,7 @@ class dbQuerySet {
 		
 		if($this->limitStart) {
 			$query .= ' LIMIT ' . $this->limitStart;
-			if(length($this->limitEnd) > 0) { $query .= ',' . $this->limitEnd;
+			if(length($this->limitEnd) > 0) { $query .= ',' . $this->limitEnd; } 
 		}
 		
 		$query .= ';';
