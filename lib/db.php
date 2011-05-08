@@ -27,6 +27,7 @@ class DB {
 	}
 	
 	public function model($modelName) {
+		$this->_querySet = null;
 		$this->_querySet = dbQuerySet::selectTable($modelName);
 		$this->_querySet->db = $this;
 		return $this->_querySet;

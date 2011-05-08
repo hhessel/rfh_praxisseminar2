@@ -19,37 +19,43 @@ class dbQuerySet {
 	public $res;
 	public $db;
 
+
 	// Select Table for Query
 	public static function selectTable($modelName) {
 		$instance = new self();
 		$instance->tblName = $modelName;
 		return $instance;
 	}
+	
+	private function setCmd($value) {
+		$this->reset();
+		$this->cmd = $value;
+	}
 
 	// Set SELECT Command and corresponding values
 	public function select($values = '*') {
-		$this->cmd = 'select';
+		$this->setCmd('select');
 		$this->fieldValues = $values;
 		return $this;
 	}
 	
 	// Set INSERT INTO Command and corresponding values
 	public function insert($values) {
-		$this->cmd = 'insert into';
+		$this->setCmd('insert into');
 		$this->insertValues = $values;
 		return $this;
 	}
 	
 	// Set WHERE Command and corresponding values
 	public function update($values) {
-		$this->cmd = 'update';
+		$this->setCmd('update');
 		$this->updateValues = $values;
 		return $this;
 	}
 	
 	// Set DELETE Command and corresponding values
 	public function delete() {
-		$this->cmd = 'delete from';
+		$this->setCmd('delete from');
 		return $this;
 	}
 	
@@ -166,7 +172,7 @@ class dbQuerySet {
 		
 		if($this->limitStart) {
 			$query .= ' LIMIT ' . $this->limitStart;
-			if(length($this->limitEnd) > 0) { $query .= ',' . $this->limitEnd; } 
+			if(strlen($this->limitEnd) > 0) { $query .= ',' . $this->limitEnd; } 
 		}
 		
 		$query .= ';';
@@ -192,6 +198,18 @@ class dbQuerySet {
 		$data = str_replace("'", "''", $data );
 		return $data;
 	}
+	
+	// Ensures clean model for reusable querysets while preservery the db link
+	private function reset() {
+		$db = $this->db;
+		$tblName = $this->tblName;
+		foreach (get_class_vars(get_class($this)) as $name => $default) {
+			$this->$name = $default;
+		}
+		$this->db = $db;
+		$this->tblName = $tblName;
+	}
+	
 }
 
 ?>

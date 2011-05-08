@@ -6,3 +6,16 @@
 %%kurs_uebersicht%%
 
 %%kurs_attachments%%
+
+<script type="text/javascript">
+	function updateNews() {
+		jQuery.ajax({
+		  url: "kurse.php?coursenews=true",
+		  success: function(ret){
+			new Effect.Opacity('news', { from: 1.0, to: 0.7, duration: 1.5 });
+			jQuery('#news').html(ret);
+		  }
+		});
+	}
+	
+</script>

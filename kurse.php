@@ -18,10 +18,16 @@ if($userHandler->login()->isLoggedIn()) {
 	$templater->loadTemplate('login.html')->data($data);
 }
 
+if(isset($_GET['coursenews'])) { 
+	header("Content-Type: text/plain; charset=utf-8");
+	echo utf8_encode($courseHandler->generateCourseNews());
+	exit();
+}
+
 if(isset($_GET['export'])) {
 	$exporter = new Exporter($db);
 	if($_GET['export'] == "xml") {
-		header("Content-Type: text/xml");
+		header("Content-Type: text/xml; charset=utf-8");
 		header('Content-Disposition: filename="kurse.xml"');
 		echo $exporter->exportCoursesToXML();
 		exit();
@@ -51,9 +57,13 @@ if(isset($_POST['kursname'])) {
 	exit();
 }
 
-$latest = $db->model('attachment')->select()->limit(3)->execute()->result();
 
 
+$latest_attachments = "<h2>Neuigkeiten</h2><div id='news'>";
+
+$latest_attachments .= $courseHandler->generateCourseNews();
+
+$latest_attachments .= "</div> <br/> <br/>";
 
 $kurse = $courseHandler->getAllCourses();
 
@@ -86,7 +96,7 @@ if($userHandler->isAdmin()) {
 	$templater->attachTemplate('kurse_add.html');
 }
 
-$templater->data(array("kurs_uebersicht" => $kurse_uebersicht));
+$templater->data(array("kurs_uebersicht" => $kurse_uebersicht, "kurs_latest" => $latest_attachments ));
 
 echo $templater->show();
 

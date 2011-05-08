@@ -99,6 +99,10 @@ class userHandler {
 		return $this->currentUser;		
 	}
 	
+	public function getUserById($userId) {
+		return $this->db->model('User')->select()->where('id', $userId)->execute()->result[0];
+	}
+	
 	// returns boolean if the current user is an admin
 	public function isAdmin() {
 		return ($this->currentUser['isAdmin']) ? true : false;
