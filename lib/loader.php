@@ -16,16 +16,16 @@ class loader {
 	public static function loadBasicSetup() {
 		include('config.php');
 		$loader = new self();
-		$loader->templater = new Templater();
+		$loader->templater = new templater();
 		$loader->templater= $loader->templater->loadBaseTemplate('tpl', 'base.html');
 		
-		$loader->db = new DB();
+		$loader->db = new db();
 		$loader->db = $loader->db->open($mysql_host, $mysql_user, $mysql_pw)->selectDB($mysql_db);
 		
 		$loader->userHandler = new userHandler();
 		$loader->userHandler = $loader->userHandler->setDB($loader->db);
 		
-		$loader->courseHandler = new CourseHandler($loader->db, $loader->userHandler);
+		$loader->courseHandler = new courseHandler($loader->db, $loader->userHandler);
 
 		return $loader;
 	}

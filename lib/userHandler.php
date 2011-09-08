@@ -100,7 +100,7 @@ class userHandler {
 	}
 	
 	public function getUserById($userId) {
-		return $this->db->model('User')->select()->where('id', $userId)->execute()->result[0];
+		return $this->db->model('user')->select()->where('id', $userId)->execute()->result[0];
 	}
 	
 	// returns boolean if the current user is an admin
